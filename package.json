@@ -1,0 +1,19 @@
+{
+  "name": "node-linda-client",
+  "version": "0.1.0",
+  "description": "linda-base client for node",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "linda",
+    "linda-base"
+  ],
+  "dependencies": {
+    "websocket": "*",
+    "moment": "*"
+  },
+  "author": "TakumiBaba",
+  "license": "MIT"
+}
