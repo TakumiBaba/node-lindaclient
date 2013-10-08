@@ -1,8 +1,12 @@
 {
   "name": "node-linda-client",
-  "version": "0.1.0",
+  "version": "0.1",
   "description": "linda-base client for node",
-  "main": "app.js",
+  "main": "client.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TakumiBaba/node-lindaclient"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +19,8 @@
     "moment": "*"
   },
   "author": "TakumiBaba",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TakumiBaba/node-lindaclient/issues"
+  }
 }
