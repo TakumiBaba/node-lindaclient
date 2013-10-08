@@ -16,7 +16,7 @@
 
     function WebsocketIO() {
       this.message = __bind(this.message, this);
-      this.close = __bind(this.close, this);
+      this.disconnect = __bind(this.disconnect, this);
       this.error = __bind(this.error, this);
       this.client = new WebsocketClient();
       this.session = "";
@@ -27,7 +27,7 @@
       this.url = url;
       this.client.on("connect", function(connection) {
         connection.on("error", _this.error);
-        connection.on("close", _this.close);
+        connection.on("close", _this.disconnect);
         connection.on("message", _this.message);
         return _this.client.on("push", function(message) {
           return connection.sendUTF(message);
@@ -40,8 +40,8 @@
       return console.log("error");
     };
 
-    WebsocketIO.prototype.close = function() {
-      return console.log("close");
+    WebsocketIO.prototype.disconnect = function() {
+      return console.log("disconnect");
     };
 
     WebsocketIO.prototype.message = function(message) {
@@ -73,8 +73,11 @@
     function LindaClient(url) {
       this.url = url;
       this.io = new WebsocketIO();
-      this.io.connect("ws://" + url);
     }
+
+    LindaClient.prototype.connect = function() {
+      return this.io.connect("ws://" + this.url);
+    };
 
     return LindaClient;
 
@@ -90,43 +93,38 @@
     }
 
     TupleSpace.prototype.write = function(tuple, opts) {
+      if (typeof tuple !== 'object') {
+        throw new Error("TupleSpace.write's Arguments[0] should be object");
+      }
       opts = opts || {};
       return this.linda.io.push("__linda_write", [this.name, tuple, opts]);
     };
 
     TupleSpace.prototype.read = function(tuple, callback) {
-      var cid, resultTuple, _results,
+      var cid,
         _this = this;
+      if (typeof tuple !== 'object') {
+        throw new Error("TupleSpace.read's Arguments[0] should be object");
+      }
+      if (typeof callback !== 'function') {
+        throw new Error("TupleSpace.read's Arguments[1] should be callback function");
+      }
       cid = callbackId();
-      if (typeof callback === 'function') {
-        this.linda.io.once("__linda_read_callback_" + cid, function(data) {
-          return callback(data.tuple, data.info);
-        });
-        this.linda.io.push("__linda_read", [this.name, tuple, cid]);
-        return;
-      }
-      resultTuple = null;
       this.linda.io.once("__linda_read_callback_" + cid, function(data) {
-        return resultTuple = data.tuple;
+        return callback(data.tuple, data.info);
       });
-      this.linda.io.push("__linda_read", [this.name, tuple, cid]);
-      _results = [];
-      while ((resultTuple != null)) {
-        _results.push(setInterval(function() {
-          if (resultTuple == null) {
-            return resultTuple;
-          }
-        }, 1000));
-      }
-      return _results;
+      return this.linda.io.push("__linda_read", [this.name, tuple, cid]);
     };
 
     TupleSpace.prototype.watch = function(tuple, callback) {
       var cid;
-      cid = callbackId();
-      if (typeof callback !== 'function') {
-        return;
+      if (typeof tuple !== 'object') {
+        throw new Error("TupleSpace.watch's Arguments[0] should be object");
       }
+      if (typeof callback !== 'function') {
+        throw new Error("TupleSpace.watch's Arguments[1] should be callback function");
+      }
+      cid = callbackId();
       this.linda.io.once("__linda_watch_callback_" + cid, function(data) {
         return callback(data.tuple, data.info);
       });
@@ -134,25 +132,18 @@
     };
 
     TupleSpace.prototype.take = function(tuple, callback) {
-      var cid, resultTuple;
+      var cid;
+      if (typeof tuple !== 'object') {
+        throw new Error("TupleSpace.take's Arguments[0] should be object");
+      }
+      if (typeof callback !== 'function') {
+        throw new Error("TupleSpace.take's Arguments[1] should be callback function");
+      }
       cid = callbackId();
-      if (typeof callback === 'function') {
-        this.linda.io.once("__linda_take_callback_" + cid, function(data) {
-          return callback(data.tuple, data.info);
-        });
-        this.linda.io.push("__linda_take", [this.name, tuple, cid]);
-        return;
-      }
-      resultTuple = null;
       this.linda.io.once("__linda_take_callback_" + cid, function(data) {
-        return resultTuple = data.tuple;
+        return callback(data.tuple, data.info);
       });
-      this.linda.io.push("__linda_take", [this.name, tuple, cid]);
-      while ((resultTuple != null)) {
-        if (resultTuple == null) {
-          return resultTuple;
-        }
-      }
+      return this.linda.io.push("__linda_take", [this.name, tuple, cid]);
     };
 
     callbackId = function() {
@@ -164,9 +155,8 @@
   })();
 
   module.exports = {
-    "client": LindaClient,
-    "tuplespace": TupleSpace,
-    "websocket": WebsocketIO
+    "LindaClient": LindaClient,
+    "TupleSpace": TupleSpace
   };
 
 }).call(this);
