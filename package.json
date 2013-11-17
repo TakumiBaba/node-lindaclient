@@ -16,7 +16,8 @@
   ],
   "dependencies": {
     "moment": "*",
-    "ws": "*"
+    "ws": "*",
+    "rocketio-client": "0.0.3"
   },
   "author": "TakumiBaba",
   "license": "MIT",
