@@ -1,6 +1,6 @@
 {
   "name": "node-linda-client",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "linda-base client for node",
   "main": "client.js",
   "repository": {
