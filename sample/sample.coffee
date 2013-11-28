@@ -1,4 +1,4 @@
-Linda = require("./client")
+Linda = require("../lib/client")
 
 linda = new Linda "http://linda.masuilab.org", "takumibaba"
 
@@ -13,4 +13,4 @@ linda.io.on "connect", ->
   linda.ts.write [0, 1, 2, 3]
   linda.ts.take [0, 1, 2], (tuple, info)->
     console.log "take!"
-    console.log tuple, info 
+    console.log tuple, info
