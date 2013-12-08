@@ -8,7 +8,6 @@ class Linda extends EventEmitter
 
   constructor: (url, name)->
     @io = new RocketIO url
-    @ts = new TupleSpace name, @
     @io.connect()
 
   push: (type, data)->
@@ -51,4 +50,6 @@ class TupleSpace
   callbackId: ()->
     "#{moment().diff(@time)}#{moment().unix()}_#{Math.random(1000000)}"
 
-module.exports = Linda
+module.exports =
+  Linda: Linda
+  TupleSpace: TupleSpace

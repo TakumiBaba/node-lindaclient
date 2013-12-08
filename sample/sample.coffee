@@ -1,6 +1,9 @@
-Linda = require("../lib/client")
+LindaClient = require("../lib/client")
+Linda = LindaClient.Linda
+TupleSpace = LindaClient.TupleSpace
 
-linda = new Linda "http://linda.masuilab.org", "takumibaba"
+linda = new Linda "http://linda.masuilab.org"
+linda.ts = new TupleSpace "baba", linda
 
 linda.io.on "connect", ->
   linda.ts.watch [0, 1], (tuple, info)->
