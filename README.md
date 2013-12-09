@@ -1,8 +1,4 @@
-# nodeinit
-
-![](https://travis-ci.org/geta6/nodeinit.png?branch=master)
-
-node_moduleを開発し始めるためのベース
+#Linda-Base Client for node
 
 # usage
 

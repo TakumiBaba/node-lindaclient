@@ -1,12 +1,23 @@
 {
-  "name": "LindaBase Client",
-  "version": "0.0.1",
+  "name": "node-linda-client",
+  "version": "0.2.2",
   "private": true,
-  "description": "",
+  "description": "linda-base client for node",
   "bin": "",
-  "main": "lib/index.js",
+  "main": "lib/client.js",
   "scripts": {
     "test": "grunt test"
+  },
+  "keywords": [
+    "linda-base",
+    "linda"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TakumiBaba/node-lindaclient"
+  },
+  "bugs": {
+    "url": "https://github.com/TakumiBaba/node-lindaclient/issues"
   },
   "author": "Takumi Baba",
   "license": "MIT",
@@ -18,5 +29,9 @@
     "grunt-contrib-coffee": "*",
     "grunt-coffeelint": "git+https://github.com/geta6/grunt-coffeelint",
     "grunt-contrib-watch": "git+https://github.com/gruntjs/grunt-contrib-watch"
+  },
+  "dependencies": {
+    "moment": "*",
+    "rocketio-client": "*"
   }
 }
