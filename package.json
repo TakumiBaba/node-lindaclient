@@ -1,6 +1,6 @@
 {
-  "name": "",
-  "version": "0.0.0",
+  "name": "LindaBase Client",
+  "version": "0.0.1",
   "private": true,
   "description": "",
   "bin": "",
@@ -8,7 +8,7 @@
   "scripts": {
     "test": "grunt test"
   },
-  "author": "",
+  "author": "Takumi Baba",
   "license": "MIT",
   "devDependencies": {
     "mocha": "*",
