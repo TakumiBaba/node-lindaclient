@@ -1,6 +1,6 @@
 {
   "name": "node-linda-client",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": true,
   "description": "linda-base client for node",
   "bin": "",
