@@ -19,7 +19,7 @@ class TupleSpace
 
   write: (tuple, opts)->
     if typeof tuple isnt "object"
-      throw new Error("TupleSpace::write args[0] should be object")
+      throw new Error "TupleSpace::write args[0] should be object"
     opts = opts || {}
     @linda.push "__linda_write", [@name, tuple, opts]
 
@@ -39,7 +39,7 @@ class TupleSpace
     if typeof callback isnt 'function'
       throw new Error("TupleSpace::watch args[1] should be callback function")
     cid = @callbackId()
-    @linda.io.once "__linda_watch_callback_#{cid}", (data)->
+    @linda.io.on "__linda_watch_callback_#{cid}", (data)->
       callback data.tuple, data.info
     @linda.push "__linda_watch", [@name, tuple, cid]
 
